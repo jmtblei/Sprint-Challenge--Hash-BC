@@ -9,10 +9,27 @@ from hashtables import (HashTable,
 def get_indices_of_item_weights(weights, length, limit):
     ht = HashTable(16)
 
-    """
-    YOUR CODE HERE
-    """
+    #if there are less than 2 items in table, there is nothing to compar
+    if length < 2:
+        return None
+    
+    for i in range(0, length):
+        #setup a ht with each weight as the key and the index as the value
+        hash_table_insert(ht, weights[i], i)
+    
+    for i in range(0, length):
+        #finds entries whose weights sums up to limit
+        corresponding_weight = limit - weights[i]
 
+        #if corresponding_weight exists
+        while hash_table_retrieve(ht, corresponding_weight):
+            #return the higher valued as the zeroth index
+            if i > hash_table_retrieve(ht, corresponding_weight):
+                return (i, hash_table_retrieve(ht, corresponding_weight))
+            #otherwise return it as the first index
+            else:
+                return(hash_table_retrieve(ht, corresponding_weight), i)
+    #return none if key doesnt exist
     return None
 
 
